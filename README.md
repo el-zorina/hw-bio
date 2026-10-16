@@ -1,20 +1,20 @@
 # Bioinformatics utilities
 
-Набор функций для работы с биологическими последовательностями и результатами BLAST.
+A collection of functions for working with biological sequences and BLAST results.
 
-## Структура проекта
+## Project Structure
 
-- `bio_utils.py` - основные функции.
-- `helpers/fastq.py` - вспомогательные функции для обработки FASTQ.
-- `helpers/bio_files.py` - вспомогательные функции для работы с FASTA и BLAST.
+- `bio_utils.py` - main functions.
+- `helpers/fastq.py` - helper functions for FASTQ processing.
+- `helpers/bio_files.py` - helper functions for working with FASTA files and BLAST results.
 
-## Фильтрация FASTQ
+## FASTQ Filtering
 
-Функция `filter_fastq` отбирает риды по GC-составу, длине последовательности и среднему качеству по шкале Phred+33.
+The `filter_fastq` function filters reads by GC content, sequence length, and average quality using the Phred+33 scale.
 
-Рид сохраняется, если удовлетворяет всем заданным условиям. Результат записывается в каталог `filtered/`.
+A read is saved only if it satisfies all specified conditions. The output file is written to the `filtered/` directory.
 
-Пример использования:
+Example:
 
 ```python
 from bio_utils import filter_fastq
@@ -27,13 +27,13 @@ filter_fastq(
     quality_threshold=20,
 )
 ```
-## Преобразование FASTA
+## FASTA Conversion
 
-Функция `convert_multiline_fasta_to_oneline` объединяет строки каждой последовательности FASTA в одну строку.
+The `convert_multiline_fasta_to_oneline` function combines multiline FASTA sequences into single lines.
 
-Если выходной файл не указан, создаётся файл с суффиксом `_oneline`.
+If the output file is not specified, a new file with the `_oneline` suffix is created.
 
-Пример использования:
+Example:
 
 ```python
 from bio_utils import convert_multiline_fasta_to_oneline
@@ -43,11 +43,11 @@ convert_multiline_fasta_to_oneline(
     "sequences_oneline.fasta",
 )
 ```
-## Обработка BLAST
+## BLAST Processing
 
-Функция `parse_blast_output` извлекает первое описание совпадения из каждого блока результатов BLAST, сортирует описания по алфавиту и записывает их в выходной файл.
+The `parse_blast_output` function extracts the first hit description from each BLAST results block, sorts the descriptions alphabetically, and writes them to an output file.
 
-Пример использования:
+Example:
 
 ```python
 from bio_utils import parse_blast_output

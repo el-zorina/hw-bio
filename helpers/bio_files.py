@@ -1,6 +1,6 @@
 def read_fasta_records(input_fasta: str) -> list[tuple[str, str]]:
     """
-    Читает FASTA-файл и объединяет строки каждой последовательности.
+    Reads a FASTA file and combines the lines of each sequence.
     """
     records = []
     header = None
@@ -32,7 +32,7 @@ def write_fasta_records(
     records: list[tuple[str, str]], output_fasta: str
 ) -> None:
     """
-    Записывает FASTA-записи, помещая каждую последовательность в одну строку.
+    Writes FASTA records with each sequence on a single line.
     """
     with open(output_fasta, "w") as file:
         for header, sequence in records:
@@ -42,7 +42,7 @@ def write_fasta_records(
 
 def get_blast_descriptions(input_file: str) -> list[str]:
     """
-    Извлекает первое описание совпадения из каждого блока результатов BLAST.
+     Extracts the first hit description from each BLAST results block.
     """
     descriptions = []
     in_results = False

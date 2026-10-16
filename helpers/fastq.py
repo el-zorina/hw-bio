@@ -1,8 +1,8 @@
 def read_fastq_record(file) -> tuple[str, str, str, str] | None:
     """
-    Читает одну запись из FASTQ-файла.
+    Reads one record from a FASTQ file.
 
-    Возвращает четыре строки записи или None, если файл закончился.
+    Returns four lines of a record, or None if the end of the file is reached.
     """
     header = file.readline()
 
@@ -18,7 +18,7 @@ def read_fastq_record(file) -> tuple[str, str, str, str] | None:
 
 def calculate_gc(sequence: str) -> float:
     """
-    Вычисляет процент G и C в последовательности.
+    Calculates the percentage of G and C nucleotides in a sequence.
     """
     sequence = sequence.upper()
     if not sequence:
@@ -30,7 +30,7 @@ def calculate_gc(sequence: str) -> float:
 
 def calculate_average_quality(quality: str) -> float:
     """
-    Вычисляет среднее качество рида по шкале Phred+33.
+    Calculates the average read quality using the Phred+33 scale.
     """
     if not quality:
         return 0.0
@@ -44,7 +44,7 @@ def calculate_average_quality(quality: str) -> float:
 
 def check_gc(sequence: str, gc_bounds: tuple[float, float]) -> bool:
     """
-    Проверяет, попадает ли GC-состав в заданный интервал.
+    Checks whether the GC content falls within the specified range.
     """
     gc_content = calculate_gc(sequence)
     return gc_bounds[0] <= gc_content <= gc_bounds[1]
@@ -52,7 +52,7 @@ def check_gc(sequence: str, gc_bounds: tuple[float, float]) -> bool:
 
 def check_length(sequence: str, length_bounds: tuple[int, int]) -> bool:
     """
-    Проверяет, попадает ли длина последовательности в заданный интервал.
+    Checks whether the sequence length falls within the specified range.
     """
     length = len(sequence)
     return length_bounds[0] <= length <= length_bounds[1]
@@ -60,13 +60,13 @@ def check_length(sequence: str, length_bounds: tuple[int, int]) -> bool:
 
 def check_quality(quality: str, quality_threshold: float) -> bool:
     """
-    Проверяет, не ниже ли среднее качество заданного порога.
+     Checks whether the average quality meets the specified threshold.
     """
     return calculate_average_quality(quality) >= quality_threshold
 
 
 def write_fastq_record(file, record: tuple[str, str, str, str]) -> None:
     """
-    Записывает одну FASTQ-запись в файл.
+     Writes one FASTQ record to a file.
     """
     file.writelines(record)

@@ -18,15 +18,15 @@ def normalize_bounds(
     default: tuple[float, float] | tuple[int, int],
 ) -> tuple[float, float] | tuple[int, int]:
     """
-    Приводит границы фильтра к паре значений.
+    Converts filter bounds into a pair of values.
 
     Args:
-        bounds: Одна верхняя граница или пара нижней и верхней границ.
-            Если значение равно None, используются границы по умолчанию.
-        default: Границы, используемые при отсутствии заданного значения.
+        bounds: A single upper bound or a pair of lower and upper bounds.
+            If None, the default bounds are used.
+        default: Bounds to use when no value is provided.
 
     Returns:
-        Пара нижней и верхней границ фильтра.
+        A pair of lower and upper filter bounds.
     """
     if bounds is None:
         return default
@@ -44,19 +44,17 @@ def filter_fastq(
     quality_threshold: float = 0,
 ) -> None:
     """
-    Фильтрует FASTQ-файл по GC-составу, длине и среднему качеству.
+    Filters a FASTQ file by GC content, sequence length, and average quality.
 
     Args:
-        input_fastq: Путь к исходному FASTQ-файлу.
-        output_fastq: Имя выходного файла в каталоге filtered.
-        gc_bounds: Допустимый интервал GC-состава в процентах
-            или только его верхняя граница.
-        length_bounds: Допустимый интервал длины рида
-            или только его верхняя граница.
-        quality_threshold: Минимальное среднее качество рида по Phred+33.
+        input_fastq: Path to the input FASTQ file.
+        output_fastq: Name of the output file in the filtered directory.
+        gc_bounds: Allowed GC content range in percent, or only its upper bound.
+        length_bounds: Allowed read length range, or only its upper bound.
+        quality_threshold: Minimum average read quality using Phred+33.
 
     Returns:
-        None. Подходящие риды записываются в каталог filtered.
+        None. Reads that pass all filters are written to the filtered directory.
     """
     gc_bounds = normalize_bounds(gc_bounds, (0, 100))
     length_bounds = normalize_bounds(length_bounds, (0, 2**32))
@@ -94,15 +92,15 @@ def convert_multiline_fasta_to_oneline(
     output_fasta: str | None = None,
 ) -> None:
     """
-    Преобразует многострочный FASTA в формат с одной строкой на последовательность.
+    Converts a multiline FASTA file to a format with one line per sequence.
 
     Args:
-        input_fasta: Путь к исходному FASTA-файлу.
-        output_fasta: Путь к выходному файлу. Если не задан,
-            создаётся файл с суффиксом _oneline перед расширением.
+        input_fasta: Path to the input FASTA file.
+        output_fasta: Path to the output file. If not specified, a file with
+            the _oneline suffix is created before the file extension.
 
     Returns:
-        None. Результат записывается в выходной FASTA-файл.
+        None. The result is written to the output FASTA file.
     """
     if output_fasta is None:
         input_path = Path(input_fasta)
@@ -115,14 +113,15 @@ def convert_multiline_fasta_to_oneline(
 
 def parse_blast_output(input_file: str, output_file: str) -> None:
     """
-    Извлекает первые описания совпадений из блоков BLAST и сортирует их.
+     Extracts the first hit description from each BLAST results block and sorts
+    the descriptions alphabetically.
 
     Args:
-        input_file: Путь к текстовому отчёту BLAST.
-        output_file: Путь к файлу для отсортированных описаний.
+        input_file: Path to the BLAST text report.
+        output_file: Path to the file for sorted descriptions.
 
     Returns:
-        None. Каждое описание записывается на отдельной строке.
+        None. Each description is written on a separate line.
     """
     descriptions = get_blast_descriptions(input_file)
     descriptions.sort()
