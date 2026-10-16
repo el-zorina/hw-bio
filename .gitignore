@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+filtered/
+example_blast_results.txt
+blast_result.txt
+test.fasta
+test.fastq
+test_blast.txt
+test_blast_result.txt
+test_oneline.fasta
